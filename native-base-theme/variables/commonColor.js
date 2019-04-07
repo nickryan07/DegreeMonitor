@@ -105,7 +105,7 @@ export default {
   checkboxTickColor: "#fff",
 
   // Color
-  brandPrimary: platform === "ios" ? "#007aff" : "#3F51B5",
+  brandPrimary: platform === "ios" ? "#1BACAF" : "#1BACAF",//"#007aff" : "#3F51B5",
   brandInfo: "#62B1F6",
   brandSuccess: "#5cb85c",
   brandDanger: "#d9534f",
@@ -114,7 +114,7 @@ export default {
   brandLight: "#f4f4f4",
 
   //Container
-  containerBgColor: "#fff",
+  containerBgColor: "#474747",//"#fff",
 
   //Date Picker
   datePickerTextColor: "#000",

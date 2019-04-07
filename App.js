@@ -1,5 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { Root, StyleProvider } from 'native-base';
+
+import Router from './src/Routing/Router';
+import variables from "./native-base-theme/variables/commonColor";
+import getTheme from './native-base-theme/components';
 
 
 const styles = StyleSheet.create({
@@ -14,13 +19,12 @@ const styles = StyleSheet.create({
 export default class App extends React.Component {
     render() {
         return (
-            <React.Fragment>
+            <Root>
+                <StyleProvider style={getTheme(variables)}>
+                    <Router />
+                </StyleProvider>
                 <StatusBar barStyle="light-content"/>
-                <Expo.AppLoading />
-            </React.Fragment>
-        // <View style={styles.container}>
-        //     <Text>Open up App.js to start working on your app!</Text>
-        // </View>
+            </Root>
         );
     }
 }
