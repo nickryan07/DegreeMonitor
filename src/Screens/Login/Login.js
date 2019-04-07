@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
     loginTitle: {
         marginTop: 25,
-        marginBottom: 35,
+        marginBottom: 15,
         alignSelf: 'center',
         color: variables.brandPrimary,
     },
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         margin: 12
     },
     logo: {
-        marginTop: 10,
+        marginBottom: 10,
         alignSelf: 'center'
     }
 });
@@ -89,11 +89,12 @@ class Login extends Component {
             <Content padder>
                 <Card style={styles.cardStyle}>
                 <Content>
-                    <Image source={require('../../../assets/icon-login.png')} style={styles.logo}/>
-
-                    <H2 style={styles.loginTitle}>
+                    
+                <H2 style={styles.loginTitle}>
                         Sign In
                     </H2>
+                    <Image source={require('../../../assets/icon-login.png')} style={styles.logo}/>
+
                     <Form>
                         <Item regular /*floatingLabel*/ style={styles.formField}>
                             <Input placeholder="NetID" textContentType="username" value={netId} onChangeText={this.handleUserChange}/>
