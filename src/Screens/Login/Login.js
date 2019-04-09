@@ -91,7 +91,7 @@ class Login extends Component {
                 <Content>
                     
                 <H2 style={styles.loginTitle}>
-                        Sign In
+                        Degree Monitor
                     </H2>
                     <Image source={require('../../../assets/icon-login.png')} style={styles.logo}/>
 
