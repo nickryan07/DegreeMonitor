@@ -52,23 +52,11 @@ class Login extends Component {
             netId: '',
             password: '',
             hidePassword: true,
-            fontsLoaded: false,
             loggingIn: false,
         }
     }
 
-    async loadFonts() {
-        await Expo.Font.loadAsync({
-            'Roboto': require('native-base/Fonts/Roboto.ttf'),
-            'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-            'Ionicons': require('@expo/vector-icons/fonts/Ionicons.ttf'),
-          });
-    }
-
-    componentWillMount() {
-        this.loadFonts();
-        this.setState({fontsLoaded: true})
-    }
+    
 
     handleUserChange = (text) => {
         this.setState({netId: text})
@@ -137,16 +125,6 @@ class Login extends Component {
     }
 
     render() {
-        const { fontsLoaded } = this.state;
-
-        if(!fontsLoaded) {
-            return ( 
-                <React.Fragment>
-                    <StatusBar barStyle="light-content"/>
-                    <Expo.AppLoading /> 
-                </React.Fragment>
-            );
-        }
 
         return (
             <Container style={styles.container}>
