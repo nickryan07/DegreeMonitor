@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, StatusBar, Image } from 'react-native';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast } from 'native-base';
+import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast, Picker } from 'native-base';
 import { Switch } from 'react-native-base-switch';
 import { WaveIndicator } from 'react-native-indicators';
 
@@ -33,7 +34,6 @@ const styles = StyleSheet.create({
     },
     cardStyle: {
         backgroundColor: 'white',
-        margin: 20,
     },
     activity: {
         margin: 12
@@ -43,34 +43,23 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     }
 });
-
-class Login extends Component {
+class CreateAccount extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            netId: '',
-            password: '',
-            hidePassword: true,
-            loggingIn: false,
+            selected: 'key1'
         }
+
     }
 
-    
-
-    handleUserChange = (text) => {
-        this.setState({netId: text});
+    onValueChange(value) {
+        this.setState({
+            selected: value
+        });
     }
 
-    handlePasswordChange = (text) => {
-        this.setState({password: text});
-    }
-
-    handleSignIn = () => {
-        this.setState({loggingIn: false});
-    }
-
-    renderLoginContent = () => {
+    renderCreateContent = () => {
         const { hidePassword, netId, password } = this.state;
 
         return (
@@ -78,40 +67,56 @@ class Login extends Component {
                 <Card style={styles.cardStyle}>
                     
                 <H2 style={styles.loginTitle}>
-                        Degree Monitor
+                        Create an Account
                     </H2>
-                    <Image source={require('../../../assets/icon-login.png')} style={styles.logo}/>
 
                     <Form>
-                        <Item rounded /*floatingLabel*/ style={styles.formField}>
+                        <Item /*floatingLabel*/ style={styles.formField}> 
+                            <Input placeholder="Name" value={password} onChangeText={this.handlePasswordChange}/>
+                        </Item>
+                        <Item /*floatingLabel*/ style={styles.formField}>
                             <Input placeholder="NetID" textContentType="username" value={netId} onChangeText={this.handleUserChange}/>
                         </Item>
-                        <Item rounded /*floatingLabel*/ style={styles.formField}> 
+                        <Item /*floatingLabel*/ style={styles.formField}> 
                             <Input placeholder="Password" secureTextEntry={hidePassword} textContentType="password"  value={password} onChangeText={this.handlePasswordChange}/>
                         </Item>
                         <ListItem style={styles.formField}>
                             <Left>
-                                <Text>Show password?</Text>
+                                
+                                <Text>
+                                    Major: 
+                                </Text>
                             </Left>
                             <Right>
-                                <Switch active={hidePassword} onChangeState={() => {this.setState({hidePassword: !hidePassword})}} inactiveButtonColor={variables.brandPrimary} inactiveButtonPressedColor={variables.brandPrimary}></Switch>
+                                <Picker
+                                    mode="dropdown"
+                                    iosHeader="Select major"
+                                    iosIcon={<Icon name="arrow-down" />}
+                                    style={{ minWidth: 200 }}
+                                    itemTextStyle= {{ color: variables.brandPrimary}}
+                                    headerStyle = {{ backgroundColor: variables.containerBgColor}}
+                                    headerBackButtonTextStyle= {{ color: variables.brandPrimary }}
+                                    headerTitleStyle={{ color: '#ffffff' }}
+                                    selectedValue={this.state.selected}
+                                    onValueChange={this.onValueChange.bind(this)}
+                                    >
+                                    {/* TODO: load these from the back end? */}
+                                    <Picker.Item label="Computer Engineering" value="key0" />
+                                    <Picker.Item label="Computer Science" value="key1" />
+                                    <Picker.Item label="Software Engineering" value="key2" />
+                                </Picker>
                             </Right>
                         </ListItem>
-                        <ListItem style={styles.formField} onPress={() => {this.props.navigation.navigate('CreateAccount')}}>
-                            <Left>
-                                <Text>Create Account</Text>
-                            </Left>
-                            <Right>
-                                <Icon name="arrow-forward" />    
-                            </Right>
-                        </ListItem>
+                        <Item /*floatingLabel*/ style={styles.formField}> 
+                            <Input placeholder="Hours Completed" value={password} onChangeText={this.handlePasswordChange}/>
+                        </Item>
                     </Form>
                     {this.state.loggingIn ? <WaveIndicator style={styles.activity} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/> :
                     <Button rounded onPress={() => {
                         this.handleSignIn()
                     }} style={styles.loginButton}>
                         <Text>
-                            Login
+                            Create Account
                         </Text>
                     </Button>
 
@@ -122,15 +127,12 @@ class Login extends Component {
     }
 
     render() {
-
         return (
-            <Container style={styles.container} scrollEnabled={false}>
-                
-                {this.renderLoginContent()}
-                <StatusBar barStyle="light-content"/>
+            <Container>
+                {this.renderCreateContent()}
             </Container>
-        );
+        )
     }
 }
 
-export default Login;
+export default CreateAccount;

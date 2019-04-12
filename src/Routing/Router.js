@@ -4,13 +4,19 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 import variables from "../../native-base-theme/variables/commonColor";
 
 import Login from '../Screens/Login/Login';
+import CreateAccount from '../Screens/Login/CreateAccount';
 
 const primaryRouteStack = createStackNavigator({
     Login: {
         screen: Login,
         
-    }, 
+    },
+    CreateAccount: {
+        screen: CreateAccount,
+    }
 }, {
+    
+    mode: 'modal',
     defaultNavigationOptions: {
         headerStyle: {
             backgroundColor:  variables.containerBgColor,
