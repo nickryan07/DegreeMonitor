@@ -56,6 +56,9 @@ class Login extends Component {
         }
     }
 
+    handleTextChange = e => {
+        this.setState({[e.target.id]: e.target.value})
+    }
     
 
     handleUserChange = (text) => {

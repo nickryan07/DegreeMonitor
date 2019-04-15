@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 
 import { StyleSheet, StatusBar, Image } from 'react-native';
+import Meteor, { Accounts, withTracker } from 'react-native-meteor';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast, Picker } from 'native-base';
+import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast, Picker, Grid, Label } from 'native-base';
 import { Switch } from 'react-native-base-switch';
 import { WaveIndicator } from 'react-native-indicators';
+
+import { alertError, alertSuccess } from '../../Alerts';
 
 
 const styles = StyleSheet.create({
@@ -41,6 +44,10 @@ const styles = StyleSheet.create({
     logo: {
         marginBottom: 10,
         alignSelf: 'center'
+    },
+    gridItem: {
+        marginLeft: 5,
+        marginRight: 5
     }
 });
 class CreateAccount extends Component {
@@ -48,7 +55,14 @@ class CreateAccount extends Component {
         super(props);
 
         this.state = {
-            selected: 'key1'
+            selected: 'Computer Science',
+            fName: '',
+            lName: '',
+            netID: '',
+            password: '',
+            hours: '',
+            gradePoints: '',
+
         }
 
     }
@@ -59,8 +73,31 @@ class CreateAccount extends Component {
         });
     }
 
+    addUser = () => {
+        const { password, netID, fName, lName, hours, totalGradePoints, major } = this.state;
+
+        const data = {
+            courses: [],
+            username: netID,
+            password: password, 
+            firstName: fName,
+            lastName: lName,
+            hoursTaken: Number(hours),
+            totalGradePoints: Number(totalGradePoints),
+            major: major,
+        }
+
+        Accounts.createUser(data, (error) => {
+            if(error) {
+                alertError(error.reason);
+            } else {
+                alertSuccess('Account Created');
+            }
+        });
+    }
+
     renderCreateContent = () => {
-        const { hidePassword, netId, password } = this.state;
+        const { netId, password, totalGradePoints, hours, fName, lName, selected } = this.state;
 
         return (
             <Content padder>
@@ -71,14 +108,23 @@ class CreateAccount extends Component {
                     </H2>
 
                     <Form>
-                        <Item /*floatingLabel*/ style={styles.formField}> 
-                            <Input placeholder="Name" value={password} onChangeText={this.handlePasswordChange}/>
+                            <Item style={styles.formField}>
+                        <Grid>
+                            <Grid container>
+                                <Grid item style={styles.gridItem}>
+                                    <Input bordered placeholder="First Name" value={fName} onChangeText={(text) => this.setState({ fName: text })}/>
+                                </Grid>
+                                <Grid item style={styles.gridItem}>
+                                    <Input placeholder="Last Name" value={lName} onChangeText={(text) => this.setState({ lName: text })}/>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                         </Item>
                         <Item /*floatingLabel*/ style={styles.formField}>
-                            <Input placeholder="NetID" textContentType="username" value={netId} onChangeText={this.handleUserChange}/>
+                            <Input placeholder="NetID" textContentType="username" value={netId} onChangeText={(text) => this.setState({ netID: text })}/>
                         </Item>
                         <Item /*floatingLabel*/ style={styles.formField}> 
-                            <Input placeholder="Password" secureTextEntry={hidePassword} textContentType="password"  value={password} onChangeText={this.handlePasswordChange}/>
+                            <Input placeholder="Password" secureTextEntry textContentType="password"  value={password} onChangeText={(text) => this.setState({ password: text })}/>
                         </Item>
                         <ListItem style={styles.formField}>
                             <Left>
@@ -97,23 +143,32 @@ class CreateAccount extends Component {
                                     headerStyle = {{ backgroundColor: variables.containerBgColor}}
                                     headerBackButtonTextStyle= {{ color: variables.brandPrimary }}
                                     headerTitleStyle={{ color: '#ffffff' }}
-                                    selectedValue={this.state.selected}
+                                    selectedValue={selected}
                                     onValueChange={this.onValueChange.bind(this)}
                                     >
                                     {/* TODO: load these from the back end? */}
-                                    <Picker.Item label="Computer Engineering" value="key0" />
-                                    <Picker.Item label="Computer Science" value="key1" />
-                                    <Picker.Item label="Software Engineering" value="key2" />
+                                    <Picker.Item label="Computer Engineering" value="Computer Engineering" />
+                                    <Picker.Item label="Computer Science" value="Computer Science" />
+                                    <Picker.Item label="Software Engineering" value="Software Engineering" />
                                 </Picker>
                             </Right>
                         </ListItem>
-                        <Item /*floatingLabel*/ style={styles.formField}> 
-                            <Input placeholder="Hours Completed" value={password} onChangeText={this.handlePasswordChange}/>
+                        <Item /*floatingLabel*/ style={styles.formField}>
+                            <Grid>
+                                <Grid container>
+                                    <Grid item style={styles.gridItem}>
+                                        <Input id='hours' placeholder="Hours Completed" keyboardType='number-pad' value={hours} onChangeText={(text) => this.setState({ hours: text })}/>
+                                    </Grid>
+                                    <Grid item style={styles.gridItem}>
+                                        <Input placeholder="Grade Points" keyboardType='number-pad' value={totalGradePoints} onChangeText={(text) => this.setState({ totalGradePoints: text })}/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
                         </Item>
                     </Form>
                     {this.state.loggingIn ? <WaveIndicator style={styles.activity} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/> :
                     <Button rounded onPress={() => {
-                        this.handleSignIn()
+                        this.addUser()
                     }} style={styles.loginButton}>
                         <Text>
                             Create Account
@@ -135,4 +190,10 @@ class CreateAccount extends Component {
     }
 }
 
-export default CreateAccount;
+export default withTracker( () => {
+    return {
+        userId: Meteor.userId(),
+        currentUser: Meteor.user(),
+        isLoggingIn: Meteor.loggingIn()
+    }
+})(CreateAccount);
