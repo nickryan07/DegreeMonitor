@@ -27,7 +27,16 @@ class Homepage extends Component {
                     </H1>
                 </Card>
                 <Card style={commonStyles.card}>
-                    
+                    <H2 style={commonStyles.title}>
+                        Classification : Super Senior
+                        Graduation: Spring 2019
+                    </H2>
+                </Card>
+                <Card style={commonStyles.card}>
+                    <H2 style={commonStyles.title}>
+                        Current GPA: 3.69
+                        Major GPA: 3.82
+                    </H2>
                 </Card>
             </Container>
         )
