@@ -5,6 +5,7 @@ import variables from "../../../native-base-theme/variables/commonColor";
 import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast } from 'native-base';
 import { Switch } from 'react-native-base-switch';
 import { WaveIndicator } from 'react-native-indicators';
+import { commonStyles } from '../../Styles';
 
 
 const styles = StyleSheet.create({
@@ -12,12 +13,6 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection: 'column',
         justifyContent: 'center',
-    },
-    loginTitle: {
-        marginTop: 25,
-        marginBottom: 15,
-        alignSelf: 'center',
-        color: variables.brandPrimary,
     },
     loginButton: {
         margin: 20,
@@ -31,10 +26,7 @@ const styles = StyleSheet.create({
     bgColor: {
         backgroundColor: variables.brandPrimary,
     },
-    cardStyle: {
-        backgroundColor: 'white',
-        margin: 20,
-    },
+    
     activity: {
         margin: 12
     },
@@ -67,7 +59,7 @@ class Login extends Component {
     }
 
     handleSignIn = () => {
-        this.setState({loggingIn: false});
+        this.props.navigation.navigate('Homepage');
     }
 
     renderLoginContent = () => {
@@ -75,15 +67,15 @@ class Login extends Component {
 
         return (
             <Content padder>
-                <Card style={styles.cardStyle}>
+                <Card style={commonStyles.card}>
                     
-                <H2 style={styles.loginTitle}>
+                <H2 style={commonStyles.title}>
                         Degree Monitor
                     </H2>
                     <Image source={require('../../../assets/icon-login.png')} style={styles.logo}/>
 
-                    <Form>
-                        <Item rounded /*floatingLabel*/ style={styles.formField}>
+                    <Form >
+                        <Item rounded /*floatingLabel*/ style={commonStyles.formField}>
                             <Input placeholder="NetID" textContentType="username" value={netId} onChangeText={this.handleUserChange}/>
                         </Item>
                         <Item rounded /*floatingLabel*/ style={styles.formField}> 
@@ -114,8 +106,9 @@ class Login extends Component {
                             Login
                         </Text>
                     </Button>
-
+                    
                     }
+                    <WaveIndicator style={styles.activity} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/>
                 </Card>
             </Content>
         )
@@ -124,7 +117,7 @@ class Login extends Component {
     render() {
 
         return (
-            <Container style={styles.container} scrollEnabled={false}>
+            <Container style={commonStyles.container} scrollEnabled={false}>
                 
                 {this.renderLoginContent()}
                 <StatusBar barStyle="light-content"/>
