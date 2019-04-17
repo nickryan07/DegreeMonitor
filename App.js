@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { Root, StyleProvider } from 'native-base';
 import { AppLoading } from 'expo';
+import Meteor, { withTracker } from 'react-native-meteor';
 
 import Router from './src/Routing/Router';
 import variables from "./native-base-theme/variables/commonColor";
@@ -40,6 +41,7 @@ export default class App extends React.Component {
 
     componentWillMount() {
         this.loadFonts();
+        Meteor.connect('ws://192.168.1.100:3000/websocket');
     }
 
     render() {
