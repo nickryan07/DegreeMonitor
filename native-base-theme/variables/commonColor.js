@@ -176,7 +176,7 @@ export default {
 
   // InputGroup
   inputFontSize: 17,
-  inputBorderColor: "#D9D5DC",
+  inputBorderColor: "#000000",
   inputSuccessBorderColor: "#2b8339",
   inputErrorBorderColor: "#ed2f2f",
   inputHeightBase: 50,
@@ -196,7 +196,7 @@ export default {
 
   // List
   listBg: "transparent",
-  listBorderColor: "#c9c9c9",
+  listBorderColor: "#000000",
   listDividerBg: "#f4f4f4",
   listBtnUnderlayColor: "#DDD",
   listItemPadding: platform === "ios" ? 10 : 12,

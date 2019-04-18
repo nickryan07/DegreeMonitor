@@ -7,6 +7,7 @@ import variables from "../../../native-base-theme/variables/commonColor";
 import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast, Picker, Grid, Label } from 'native-base';
 import { Switch } from 'react-native-base-switch';
 import { WaveIndicator } from 'react-native-indicators';
+import { commonStyles } from '../../Styles';
 
 import { alertError, alertSuccess } from '../../Alerts';
 
@@ -101,7 +102,7 @@ class CreateAccount extends Component {
 
         return (
             <Content padder>
-                <Card style={styles.cardStyle}>
+                <Card style={commonStyles.card}>
                     
                 <H2 style={styles.loginTitle}>
                         Create an Account
