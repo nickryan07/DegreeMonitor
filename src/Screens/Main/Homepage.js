@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, StatusBar, Image } from 'react-native';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, H2, H1, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast, Picker } from 'native-base';
+import { Container, H2, H1, H3, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast, Picker } from 'native-base';
 import { commonStyles } from '../../Styles';
 
 
@@ -12,7 +12,7 @@ class Homepage extends Component {
         super(props);
 
         this.state = { 
-            name: 'John Doe',
+            name: 'Iron Man',
 
         }
     }
@@ -29,14 +29,16 @@ class Homepage extends Component {
                 <Card style={commonStyles.card}>
                     <H2 style={commonStyles.title}>
                         Classification : Super Senior
+                        {"\n"}
                         Graduation: Spring 2019
                     </H2>
                 </Card>
                 <Card style={commonStyles.card}>
-                    <H2 style={commonStyles.title}>
+                    <H3 style={commonStyles.title}>
                         Current GPA: 3.69
+                        {"\n"}
                         Major GPA: 3.82
-                    </H2>
+                    </H3>
                 </Card>
             </Container>
         )
