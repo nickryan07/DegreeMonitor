@@ -9,6 +9,9 @@ import variables from "./native-base-theme/variables/commonColor";
 import getTheme from './native-base-theme/components';
 
 
+import config from './config.json';
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -41,7 +44,7 @@ export default class App extends React.Component {
 
     componentWillMount() {
         this.loadFonts();
-        Meteor.connect('ws://192.168.1.100:3000/websocket');
+        Meteor.connect('ws://' + config.serverAddress + ':3000/websocket');
     }
 
     render() {
