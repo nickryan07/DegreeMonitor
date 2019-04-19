@@ -112,6 +112,7 @@ export default {
   brandWarning: "#f0ad4e",
   brandDark: "#000",
   brandLight: "#f4f4f4",
+  brandTextLight: "#D4DCCB",
 
   //Container
   containerBgColor: "#474747",//"#fff",
@@ -176,7 +177,7 @@ export default {
 
   // InputGroup
   inputFontSize: 17,
-  inputBorderColor: "#000000",
+  inputBorderColor: "gray",
   inputSuccessBorderColor: "#2b8339",
   inputErrorBorderColor: "#ed2f2f",
   inputHeightBase: 50,
@@ -196,7 +197,7 @@ export default {
 
   // List
   listBg: "transparent",
-  listBorderColor: "#000000",
+  listBorderColor: "gray",
   listDividerBg: "#f4f4f4",
   listBtnUnderlayColor: "#DDD",
   listItemPadding: platform === "ios" ? 10 : 12,

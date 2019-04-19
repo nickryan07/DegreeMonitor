@@ -19,10 +19,19 @@ export const commonStyles = StyleSheet.create({
         color: variables.brandPrimary,
     },
     card: {
-        backgroundColor: '#D4DCCB',
+        backgroundColor: variables.brandTextLight,
         margin: 20,
     },
     icon: {
         color: variables.brandPrimary,
+    },
+    greenText: {
+        color: variables.brandPrimary,
+    },
+    lightText: {
+        color: variables.brandTextLight,
+    },
+    listItemStyle: {
+        paddingBottom: 100
     }
 });

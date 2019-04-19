@@ -76,7 +76,7 @@ class CreateAccount extends Component {
     }
 
     addUser = () => {
-        const { password, netID, fName, lName, hours, totalGradePoints, major } = this.state;
+        const { password, netID, fName, lName, hours, currentGPA, major } = this.state;
 
         const data = {
             courses: [],
@@ -85,7 +85,7 @@ class CreateAccount extends Component {
             firstName: fName,
             lastName: lName,
             hoursTaken: Number(hours),
-            totalGradePoints: Number(totalGradePoints),
+            currentGPA: Number(currentGPA),
             major: major,
         }
 
@@ -99,13 +99,13 @@ class CreateAccount extends Component {
     }
 
     renderCreateContent = () => {
-        const { netId, password, totalGradePoints, hours, fName, lName, selected } = this.state;
+        const { netId, password, currentGPA, hours, fName, lName, selected } = this.state;
 
         return (
             <Content padder>
                 <Card style={commonStyles.card}>
                     
-                <H2 style={styles.loginTitle}>
+                    <H2 style={styles.loginTitle}>
                         Create an Account
                     </H2>
 
@@ -130,20 +130,17 @@ class CreateAccount extends Component {
                         </Item>
                         <Item style={styles.formField}>
                             <Left>
-                                
-                                <Text>
-                                    Major: 
-                                </Text>
-                            </Left>
-                            <Body>
 
-                            </Body>
+                            <Text>
+                                Major: 
+                            </Text>
+                            </Left>
                             <Right>
                                 <Picker
                                     mode="dropdown"
                                     iosHeader="Select major"
                                     iosIcon={<Icon name="arrow-down" />}
-                                    style={{ minWidth: 200 }}
+                                    style={{ maxWidth: 200 }}
                                     itemTextStyle= {{ color: variables.brandPrimary}}
                                     headerStyle = {{ backgroundColor: variables.containerBgColor}}
                                     headerBackButtonTextStyle= {{ color: variables.brandPrimary }}
@@ -165,7 +162,7 @@ class CreateAccount extends Component {
                                         <Input id='hours' placeholder="Hours Completed" keyboardType='number-pad' value={hours} onChangeText={(text) => this.setState({ hours: text })}/>
                                     </Grid>
                                     <Grid item style={styles.gridItem}>
-                                        <Input placeholder="Current GPA" keyboardType='number-pad' value={totalGradePoints} onChangeText={(text) => this.setState({ totalGradePoints: text })}/>
+                                        <Input placeholder="Current GPA" keyboardType='number-pad' value={currentGPA} onChangeText={(text) => this.setState({ currentGPA: text })}/>
                                     </Grid>
                                 </Grid>
                             </Grid>
