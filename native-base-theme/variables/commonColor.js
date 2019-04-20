@@ -156,7 +156,7 @@ export default {
   searchBarHeight: platform === "ios" ? 30 : 40,
   searchBarInputHeight: platform === "ios" ? 30 : 50,
   toolbarBtnTextColor: platform === "ios" ? "#007aff" : "#fff",
-  iosStatusbar: "dark-content",
+  iosStatusbar: "light-content",
   toolbarDefaultBorder: platform === "ios" ? "#a7a6ab" : "#3F51B5",
   get statusBarColor() {
     return color(this.toolbarDefaultBg)
@@ -176,7 +176,7 @@ export default {
 
   // InputGroup
   inputFontSize: 17,
-  inputBorderColor: "#000000",
+  inputBorderColor: "#474747",
   inputSuccessBorderColor: "#2b8339",
   inputErrorBorderColor: "#ed2f2f",
   inputHeightBase: 50,
@@ -196,7 +196,7 @@ export default {
 
   // List
   listBg: "transparent",
-  listBorderColor: "#000000",
+  listBorderColor: "#474747",
   listDividerBg: "#f4f4f4",
   listBtnUnderlayColor: "#DDD",
   listItemPadding: platform === "ios" ? 10 : 12,
