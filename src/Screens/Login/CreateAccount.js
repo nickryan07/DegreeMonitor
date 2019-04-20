@@ -4,12 +4,13 @@ import { StyleSheet, StatusBar, Image } from 'react-native';
 import Meteor, { Accounts, withTracker } from 'react-native-meteor';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast, Picker, Grid, Label } from 'native-base';
+import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, Body, ListItem, Left, Right, Toast, Picker, Grid, Label } from 'native-base';
 import { Switch } from 'react-native-base-switch';
 import { WaveIndicator } from 'react-native-indicators';
 import { commonStyles } from '../../Styles';
 
 import { alertError, alertSuccess } from '../../Alerts';
+
 
 
 const styles = StyleSheet.create({
@@ -75,7 +76,7 @@ class CreateAccount extends Component {
     }
 
     addUser = () => {
-        const { password, netID, fName, lName, hours, totalGradePoints, major } = this.state;
+        const { password, netID, fName, lName, hours, currentGPA, major } = this.state;
 
         const data = {
             courses: [],
@@ -84,7 +85,7 @@ class CreateAccount extends Component {
             firstName: fName,
             lastName: lName,
             hoursTaken: Number(hours),
-            totalGradePoints: Number(totalGradePoints),
+            currentGPA: Number(currentGPA),
             major: major,
         }
 
@@ -98,28 +99,28 @@ class CreateAccount extends Component {
     }
 
     renderCreateContent = () => {
-        const { netId, password, totalGradePoints, hours, fName, lName, selected } = this.state;
+        const { netId, password, currentGPA, hours, fName, lName, selected } = this.state;
 
         return (
             <Content padder>
                 <Card style={commonStyles.card}>
                     
-                <H2 style={styles.loginTitle}>
+                    <H2 style={styles.loginTitle}>
                         Create an Account
                     </H2>
 
                     <Form>
-                            <Item style={styles.formField}>
-                        <Grid>
-                            <Grid container>
-                                <Grid item style={styles.gridItem}>
-                                    <Input bordered placeholder="First Name" value={fName} onChangeText={(text) => this.setState({ fName: text })}/>
-                                </Grid>
-                                <Grid item style={styles.gridItem}>
-                                    <Input placeholder="Last Name" value={lName} onChangeText={(text) => this.setState({ lName: text })}/>
+                        <Item style={styles.formField}>
+                            <Grid>
+                                <Grid container>
+                                    <Grid item style={styles.gridItem}>
+                                        <Input bordered placeholder="First Name" value={fName} onChangeText={(text) => this.setState({ fName: text })}/>
+                                    </Grid>
+                                    <Grid item style={styles.gridItem}>
+                                        <Input placeholder="Last Name" value={lName} onChangeText={(text) => this.setState({ lName: text })}/>
+                                    </Grid>
                                 </Grid>
                             </Grid>
-                        </Grid>
                         </Item>
                         <Item /*floatingLabel*/ style={styles.formField}>
                             <Input placeholder="NetID" textContentType="username" value={netId} onChangeText={(text) => this.setState({ netID: text })}/>
@@ -127,19 +128,19 @@ class CreateAccount extends Component {
                         <Item /*floatingLabel*/ style={styles.formField}> 
                             <Input placeholder="Password" secureTextEntry textContentType="password"  value={password} onChangeText={(text) => this.setState({ password: text })}/>
                         </Item>
-                        <ListItem style={styles.formField}>
+                        <Item style={styles.formField}>
                             <Left>
-                                
-                                <Text>
-                                    Major: 
-                                </Text>
+
+                            <Text>
+                                Major: 
+                            </Text>
                             </Left>
                             <Right>
                                 <Picker
                                     mode="dropdown"
                                     iosHeader="Select major"
                                     iosIcon={<Icon name="arrow-down" />}
-                                    style={{ minWidth: 200 }}
+                                    style={{ maxWidth: 200 }}
                                     itemTextStyle= {{ color: variables.brandPrimary}}
                                     headerStyle = {{ backgroundColor: variables.containerBgColor}}
                                     headerBackButtonTextStyle= {{ color: variables.brandPrimary }}
@@ -153,7 +154,7 @@ class CreateAccount extends Component {
                                     <Picker.Item label="Software Engineering" value="Software Engineering" />
                                 </Picker>
                             </Right>
-                        </ListItem>
+                        </Item>
                         <Item /*floatingLabel*/ style={styles.formField}>
                             <Grid>
                                 <Grid container>
@@ -161,7 +162,7 @@ class CreateAccount extends Component {
                                         <Input id='hours' placeholder="Hours Completed" keyboardType='number-pad' value={hours} onChangeText={(text) => this.setState({ hours: text })}/>
                                     </Grid>
                                     <Grid item style={styles.gridItem}>
-                                        <Input placeholder="Grade Points" keyboardType='number-pad' value={totalGradePoints} onChangeText={(text) => this.setState({ totalGradePoints: text })}/>
+                                        <Input placeholder="Current GPA" keyboardType='number-pad' value={currentGPA} onChangeText={(text) => this.setState({ currentGPA: text })}/>
                                     </Grid>
                                 </Grid>
                             </Grid>

@@ -6,6 +6,7 @@ import variables from "../../native-base-theme/variables/commonColor";
 import Login from '../Screens/Login/Login';
 import CreateAccount from '../Screens/Login/CreateAccount';
 import Homepage from '../Screens/Main/Homepage';
+import Settings from '../Screens/Main/Settings';
 import { Icon } from 'native-base';
 import { commonStyles } from '../Styles';
 
@@ -38,7 +39,7 @@ const loggedInStack = createBottomTabNavigator({
         }
     },
     Settings: {
-        screen: Homepage,
+        screen: Settings,
         navigationOptions: {
             headerLeft: null,
         }
@@ -62,7 +63,7 @@ const loggedInStack = createBottomTabNavigator({
                 iconType = 'Ionicons'
             }
             return <Icon type={iconType} name={iconName} size={25} style={commonStyles.icon}/>
-        }
+        },
     }),
     tabBarOptions: {
         activeTintColor: variables.brandPrimary,
@@ -83,7 +84,9 @@ const primaryRouteStack = createStackNavigator({
     Homepage: {
         screen: loggedInStack,
         navigationOptions: {
-            headerLeft: null
+            headerLeft: null,
+            
+            title: "DegreeMonitor"
         }
     }
 }, {
