@@ -26,13 +26,13 @@ class Homepage extends Component {
         if(!this.props.currentUser) {
             return "Unknown";
         }
-        if(this.props.currentUser.profile.hoursTaken < 30) {
+        if(this.props.currentUser.profile.hoursTaken <= 30) {
             return "Freshman";
-        } else if(this.props.currentUser.profile.hoursTaken < 60) {
+        } else if(this.props.currentUser.profile.hoursTaken <= 60) {
             return "Sophmore";
-        } else if(this.props.currentUser.profile.hoursTaken < 90) {
+        } else if(this.props.currentUser.profile.hoursTaken <= 90) {
             return "Junior";
-        } else if(this.props.currentUser.profile.hoursTaken < 160) {
+        } else if(this.props.currentUser.profile.hoursTaken <= 160) {
             return "Senior";
         }
     }
@@ -59,7 +59,7 @@ class Homepage extends Component {
                         <H3 style={commonStyles.title}>
                             Current GPA: {this.props.currentUser.profile.currentGPA}
                             {"\n"}
-                            Major GPA: 3.82
+                            Major GPA: TODO
                         </H3>
                     </Card>
                 </Content>
