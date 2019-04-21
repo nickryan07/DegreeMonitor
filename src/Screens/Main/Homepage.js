@@ -23,6 +23,9 @@ class Homepage extends Component {
      * TODO: needs testing
      */
     getClassification = () => {
+        if(!this.props.currentUser) {
+            return "Unknown";
+        }
         if(this.props.currentUser.profile.hoursTaken < 30) {
             return "Freshman";
         } else if(this.props.currentUser.profile.hoursTaken < 60) {

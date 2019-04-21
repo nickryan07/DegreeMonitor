@@ -162,7 +162,7 @@ class CreateAccount extends Component {
                                         <Input id='hours' placeholder="Hours Completed" keyboardType='number-pad' value={hours} onChangeText={(text) => this.setState({ hours: text })}/>
                                     </Grid>
                                     <Grid item style={styles.gridItem}>
-                                        <Input placeholder="Current GPA" keyboardType='number-pad' value={currentGPA} onChangeText={(text) => this.setState({ currentGPA: text })}/>
+                                        <Input placeholder="Current GPA" keyboardType='decimal-pad' value={currentGPA} onChangeText={(text) => this.setState({ currentGPA: text })}/>
                                     </Grid>
                                 </Grid>
                             </Grid>
