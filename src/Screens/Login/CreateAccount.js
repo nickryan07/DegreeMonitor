@@ -57,7 +57,7 @@ class CreateAccount extends Component {
         super(props);
 
         this.state = {
-            selected: 'Computer Science',
+            major: 'Computer Science',
             fName: '',
             lName: '',
             netID: '',
@@ -71,13 +71,13 @@ class CreateAccount extends Component {
 
     onValueChange(value) {
         this.setState({
-            selected: value
+            major: value
         });
     }
 
     addUser = () => {
         const { password, netID, fName, lName, hours, currentGPA, major } = this.state;
-
+        
         const data = {
             courses: [],
             username: netID,
@@ -99,7 +99,7 @@ class CreateAccount extends Component {
     }
 
     renderCreateContent = () => {
-        const { netId, password, currentGPA, hours, fName, lName, selected } = this.state;
+        const { netId, password, currentGPA, hours, fName, lName, major } = this.state;
 
         return (
             <Content padder>
@@ -145,7 +145,7 @@ class CreateAccount extends Component {
                                     headerStyle = {{ backgroundColor: variables.containerBgColor}}
                                     headerBackButtonTextStyle= {{ color: variables.brandPrimary }}
                                     headerTitleStyle={{ color: '#ffffff' }}
-                                    selectedValue={selected}
+                                    selectedValue={major}
                                     onValueChange={this.onValueChange.bind(this)}
                                     >
                                     {/* TODO: load these from the back end? */}

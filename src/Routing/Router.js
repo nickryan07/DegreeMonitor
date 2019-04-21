@@ -42,6 +42,8 @@ const loggedInStack = createBottomTabNavigator({
         screen: Settings,
         navigationOptions: {
             headerLeft: null,
+            title: "Settings",
+            headerRight: <Icon type="Ionicons" name="ios-save" size={25} style={commonStyles.icon}/>,
         }
     },
 }, {
@@ -84,7 +86,7 @@ const primaryRouteStack = createStackNavigator({
     Homepage: {
         screen: loggedInStack,
         navigationOptions: {
-            headerLeft: null,
+            header: null,
             
             title: "DegreeMonitor"
         }

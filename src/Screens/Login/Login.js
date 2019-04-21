@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, StatusBar, Image } from 'react-native';
+import Meteor, { Accounts, withTracker } from 'react-native-meteor';
 
 import variables from "../../../native-base-theme/variables/commonColor";
 import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast } from 'native-base';
 import { Switch } from 'react-native-base-switch';
 import { WaveIndicator } from 'react-native-indicators';
 import { commonStyles } from '../../Styles';
+
+import { alertError } from '../../Alerts';
 
 
 const styles = StyleSheet.create({
@@ -62,7 +65,25 @@ class Login extends Component {
     }
 
     handleSignIn = () => {
-        this.props.navigation.navigate('Homepage');
+        const { netId, password } = this.state;
+
+        Meteor.loginWithPassword(netId, password, (error) => {
+            if(error) {
+                alertError(error.reason);
+            }
+        });
+    }
+
+    isLoggingIn = () => {
+        Accounts.onLogin((res) => {
+            if(Meteor.userId()) {
+                this.props.navigation.navigate('Homepage');
+            }
+        });
+    }
+
+    componentWillMount() {
+        this.isLoggingIn();
     }
 
     renderLoginContent = () => {
@@ -101,7 +122,7 @@ class Login extends Component {
                             </Right>
                         </ListItem>
                     </Form>
-                    {this.state.loggingIn ? <WaveIndicator style={styles.activity} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/> :
+                    {this.props.loggingIn ? <WaveIndicator style={styles.activity} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/> :
                     <Button rounded onPress={() => {
                         this.handleSignIn()
                     }} style={styles.loginButton}>
@@ -111,7 +132,6 @@ class Login extends Component {
                     </Button>
                     
                     }
-                    <WaveIndicator style={styles.activity} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/>
                 </Card>
             </Content>
         )
@@ -129,4 +149,10 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default withTracker( () => {
+    return {
+        userId: Meteor.userId(),
+        currentUser: Meteor.user(),
+        isLoggingIn: Meteor.loggingIn()
+    }
+})(Login);
