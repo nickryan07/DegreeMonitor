@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, StatusBar, Image } from 'react-native';
+import { StyleSheet, StatusBar, Image, Easing } from 'react-native';
 import Meteor, { Accounts, withTracker } from 'react-native-meteor';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, H2, H1, H3, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast, Picker } from 'native-base';
+import { Container, H2, H1, H3, Icon, Form, Text, Input, Item, Content, Card, CardItem, Button, ListItem, Left, Right, Toast, Picker } from 'native-base';
 import { commonStyles } from '../../Styles';
 import Header from '../../Components/Header';
 
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 
 class Homepage extends Component {
@@ -15,8 +16,12 @@ class Homepage extends Component {
 
         this.state = { 
             name: props.currentUser.profile.firstName,
-
+            fill: Math.round((props.currentUser.profile.hoursTaken/121)*100),
         }
+    }
+
+    componentDidMount() {
+        this.circularProgress.animate(Math.round((this.props.currentUser.profile.hoursTaken/121)*100), 2500, Easing.quad);
     }
 
     /**
@@ -41,14 +46,13 @@ class Homepage extends Component {
         const { name } = this.state;
         return (
             <Container>
-                <Header headerTitle="Home" iconName="ios-home"/>
+                <Header headerTitle="Home" iconName="ios-home" iconAction={() => {}}/>
                 <Content padder>
                     <Card style={commonStyles.card}>
                         <H1 style={commonStyles.title}>
                             Welcome, {this.props.currentUser.profile.firstName}!
                         </H1>
-                    </Card>
-                    <Card style={commonStyles.card}>
+                    {/* <Card style={commonStyles.card}>
                         <H2 style={commonStyles.title}>
                             Classification : {this.getClassification()}
                             {"\n"}
@@ -61,6 +65,73 @@ class Homepage extends Component {
                             {"\n"}
                             Major GPA: 3.82
                         </H3>
+                    </Card> */}
+                        </Card>
+                        <AnimatedCircularProgress
+                            style={commonStyles.cardBody}
+                            ref={(ref) => this.circularProgress = ref}
+                            size={140}
+                            width={12}
+                            fill={Math.round((this.props.currentUser.profile.hoursTaken/121)*100)}
+                            tintColor={variables.brandPrimary}
+                            onAnimationComplete={() => console.log('onAnimationComplete')}
+                            backgroundColor={variables.containerBgColor}>
+                            {
+                                (fill) => (
+                                    <Text style={{color: '#d3d3d3'}}>
+                                        { Math.round((this.props.currentUser.profile.hoursTaken/121)*100) } %
+                                        {'\n'}
+                                        Complete
+                                    </Text>
+                                )
+                            }
+                            </AnimatedCircularProgress>
+                        <Card style={commonStyles.cardItem}>
+                        <CardItem bordered style={commonStyles.cardItem}>
+                            <Icon active type="MaterialIcons" name="class" style={commonStyles.cardIcon} />
+                            <Text style={commonStyles.lightText}>
+                                Classification:
+                            </Text>
+                            <Right>
+                                <Text style={commonStyles.greenText}>
+                                    {this.getClassification()}
+                                </Text>
+                            </Right>
+                        </CardItem>
+                        <CardItem bordered style={commonStyles.cardItem}>
+                            <Icon active type="FontAwesome" name="graduation-cap" style={commonStyles.cardIcon} />
+                            <Text style={commonStyles.lightText}>
+                                Graduation:
+                            </Text>
+                            <Right>
+                                <Text style={commonStyles.greenText}>
+                                    Spring 2019
+                                </Text>
+                            </Right>
+                            
+                        </CardItem>
+                        <CardItem bordered style={commonStyles.cardItem}>
+                            <Icon active type="Ionicons" name="ios-star" style={commonStyles.cardIcon} />
+                            <Text style={commonStyles.lightText}>
+                                Current GPA: 
+                            </Text>
+                            <Right>
+                                <Text style={commonStyles.greenText}>
+                                    {this.props.currentUser.profile.currentGPA}
+                                </Text>
+                            </Right>
+                            </CardItem>
+                        <CardItem bordered style={commonStyles.cardItem}>
+                            <Icon active type="Ionicons" name="ios-star" style={commonStyles.cardIcon} />
+                            <Text style={commonStyles.lightText}>
+                                Major GPA: 
+                            </Text>
+                            <Right>
+                                <Text style={commonStyles.greenText}>
+                                    3.82
+                                </Text>
+                            </Right>
+                        </CardItem>
                     </Card>
                 </Content>
             </Container>

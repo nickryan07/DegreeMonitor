@@ -21,7 +21,7 @@ class TabHeader extends Component {
                 </Body>
                 <Right>
                     <Button transparent>
-                    <Icon name={iconName} onPress={this.props.iconAction} style={commonStyles.icon}/>
+                        <Icon name={iconName} onPress={this.props.iconAction} style={commonStyles.icon}/>
                     </Button>
                 </Right>
             </Header>

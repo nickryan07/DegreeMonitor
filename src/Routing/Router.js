@@ -7,6 +7,7 @@ import Login from '../Screens/Login/Login';
 import CreateAccount from '../Screens/Login/CreateAccount';
 import Homepage from '../Screens/Main/Homepage';
 import Settings from '../Screens/Main/Settings';
+import GPA from '../Screens/Main/GPA';
 import { Icon } from 'native-base';
 import { commonStyles } from '../Styles';
 
@@ -27,7 +28,7 @@ const loggedInStack = createBottomTabNavigator({
         }
     },
     GPA: {
-        screen: Homepage,
+        screen: GPA,
         navigationOptions: {
             headerLeft: null,
         }
@@ -42,8 +43,6 @@ const loggedInStack = createBottomTabNavigator({
         screen: Settings,
         navigationOptions: {
             headerLeft: null,
-            title: "Settings",
-            headerRight: <Icon type="Ionicons" name="ios-save" size={25} style={commonStyles.icon}/>,
         }
     },
 }, {

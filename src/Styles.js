@@ -22,8 +22,26 @@ export const commonStyles = StyleSheet.create({
         backgroundColor: variables.brandTextLight,
         margin: 20,
     },
+    cardItem: {
+        backgroundColor: variables.containerBgColor,
+    },
+    cardBody: {
+        backgroundColor: variables.containerBgColor,
+        alignSelf: 'center',
+        margin: 45
+    },
+    cardIcon: {
+        color: variables.brandPrimary,
+        fontSize: 18,
+        marginRight: 2,
+        marginLeft: 2,
+    },
     icon: {
         color: variables.brandPrimary,
+    },
+    headerIcon: {
+        color: variables.brandPrimary,
+        fontSize: 26,
     },
     greenText: {
         color: variables.brandPrimary,

@@ -23,10 +23,12 @@ const styles = StyleSheet.create({
         minWidth: 30,
         color: variables.brandPrimary,
         marginLeft: 10,
+        maxWidth: 200
     },
     pickerIOS: {
         minWidth: 30,
         marginLeft: 10,
+        maxWidth: 200 
     }
 });
 
@@ -90,7 +92,7 @@ class Settings extends Component {
                     <Form>
                         <Item>
                             <Left>
-                                <Text style={commonStyles.lightText}>First Name</Text>
+                                <Text style={commonStyles.lightText}>First Name:</Text>
                             </Left>
                                 
                             <Input label="First Name" placeholderTextColor={variables.brandPrimary} value={fName} style={{color: variables.brandPrimary}} placeholder="Current First Name" onChangeText={(text) => this.setState({ fName: text })}></Input>
@@ -98,7 +100,7 @@ class Settings extends Component {
                         </Item>
                         <Item>
                             <Left>
-                                <Text style={commonStyles.lightText}>Last Name</Text>
+                                <Text style={commonStyles.lightText}>Last Name:</Text>
                             </Left>
                             
                                 
@@ -132,7 +134,7 @@ class Settings extends Component {
                         </Item>
                         <Item>
                             <Left>
-                                <Text style={commonStyles.lightText}>Hours Completed</Text>
+                                <Text style={commonStyles.lightText}>Hours Completed:</Text>
                             </Left>
                             
                                 
@@ -141,7 +143,7 @@ class Settings extends Component {
                         </Item>
                         <Item>
                             <Left>
-                                <Text style={commonStyles.lightText}>Current GPA</Text>
+                                <Text style={commonStyles.lightText}>Current GPA:</Text>
                             </Left>
                             
                                 
