@@ -15,7 +15,6 @@ class Homepage extends Component {
         super(props);
 
         this.state = { 
-            name: props.currentUser.profile.firstName,
             fill: Math.round((props.currentUser.profile.hoursTaken/121)*100),
         }
     }
@@ -42,98 +41,91 @@ class Homepage extends Component {
         }
     }
 
+    renderHomeContent = () => {
+        return (
+            <Content padder>
+                <Card style={commonStyles.card}>
+                    <H1 style={commonStyles.title}>
+                        Welcome, {this.props.currentUser.profile.firstName}!
+                    </H1>
+                    </Card>
+                    <AnimatedCircularProgress
+                        style={commonStyles.cardBody}
+                        ref={(ref) => this.circularProgress = ref}
+                        size={140}
+                        width={12}
+                        fill={Math.round((this.props.currentUser.profile.hoursTaken/121)*100)}
+                        tintColor={variables.brandPrimary}
+                        onAnimationComplete={() => console.log('onAnimationComplete')}
+                        backgroundColor={variables.containerBgColor}>
+                        {
+                            (fill) => (
+                                <Text style={{color: '#d3d3d3'}}>
+                                    { Math.round((this.props.currentUser.profile.hoursTaken/121)*100) } %
+                                    {'\n'}
+                                    Complete
+                                </Text>
+                            )
+                        }
+                        </AnimatedCircularProgress>
+                    <Card style={commonStyles.cardItem}>
+                    <CardItem bordered style={commonStyles.cardItem}>
+                        <Icon active type="MaterialIcons" name="class" style={commonStyles.cardIcon} />
+                        <Text style={commonStyles.lightText}>
+                            Classification:
+                        </Text>
+                        <Right>
+                            <Text style={commonStyles.greenText}>
+                                {this.getClassification()}
+                            </Text>
+                        </Right>
+                    </CardItem>
+                    <CardItem bordered style={commonStyles.cardItem}>
+                        <Icon active type="FontAwesome" name="graduation-cap" style={commonStyles.cardIcon} />
+                        <Text style={commonStyles.lightText}>
+                            Graduation:
+                        </Text>
+                        <Right>
+                            <Text style={commonStyles.greenText}>
+                                Spring 2019
+                            </Text>
+                        </Right>
+                        
+                    </CardItem>
+                    <CardItem bordered style={commonStyles.cardItem}>
+                        <Icon active type="Ionicons" name="ios-star" style={commonStyles.cardIcon} />
+                        <Text style={commonStyles.lightText}>
+                            Current GPA: 
+                        </Text>
+                        <Right>
+                            <Text style={commonStyles.greenText}>
+                                {this.props.currentUser.profile.currentGPA}
+                            </Text>
+                        </Right>
+                        </CardItem>
+                    <CardItem bordered style={commonStyles.cardItem}>
+                        <Icon active type="Ionicons" name="ios-star" style={commonStyles.cardIcon} />
+                        <Text style={commonStyles.lightText}>
+                            Major GPA: 
+                        </Text>
+                        <Right>
+                            <Text style={commonStyles.greenText}>
+                                3.82
+                            </Text>
+                        </Right>
+                    </CardItem>
+                </Card>
+            </Content>
+        );
+    }
+
     render() {
-        const { name } = this.state;
+
         return (
             <Container>
                 <Header headerTitle="Home" iconName="ios-home" iconAction={() => {}}/>
-                <Content padder>
-                    <Card style={commonStyles.card}>
-                        <H1 style={commonStyles.title}>
-                            Welcome, {this.props.currentUser.profile.firstName}!
-                        </H1>
-                    {/* <Card style={commonStyles.card}>
-                        <H2 style={commonStyles.title}>
-                            Classification : {this.getClassification()}
-                            {"\n"}
-                            Graduation: Spring 2019
-                        </H2>
-                    </Card>
-                    <Card style={commonStyles.card}>
-                        <H3 style={commonStyles.title}>
-                            Current GPA: {this.props.currentUser.profile.currentGPA}
-                            {"\n"}
-                            Major GPA: TODO
-                        </H3>
-                    </Card> */}
-                        </Card>
-                        <AnimatedCircularProgress
-                            style={commonStyles.cardBody}
-                            ref={(ref) => this.circularProgress = ref}
-                            size={140}
-                            width={12}
-                            fill={Math.round((this.props.currentUser.profile.hoursTaken/121)*100)}
-                            tintColor={variables.brandPrimary}
-                            onAnimationComplete={() => console.log('onAnimationComplete')}
-                            backgroundColor={variables.containerBgColor}>
-                            {
-                                (fill) => (
-                                    <Text style={{color: '#d3d3d3'}}>
-                                        { Math.round((this.props.currentUser.profile.hoursTaken/121)*100) } %
-                                        {'\n'}
-                                        Complete
-                                    </Text>
-                                )
-                            }
-                            </AnimatedCircularProgress>
-                        <Card style={commonStyles.cardItem}>
-                        <CardItem bordered style={commonStyles.cardItem}>
-                            <Icon active type="MaterialIcons" name="class" style={commonStyles.cardIcon} />
-                            <Text style={commonStyles.lightText}>
-                                Classification:
-                            </Text>
-                            <Right>
-                                <Text style={commonStyles.greenText}>
-                                    {this.getClassification()}
-                                </Text>
-                            </Right>
-                        </CardItem>
-                        <CardItem bordered style={commonStyles.cardItem}>
-                            <Icon active type="FontAwesome" name="graduation-cap" style={commonStyles.cardIcon} />
-                            <Text style={commonStyles.lightText}>
-                                Graduation:
-                            </Text>
-                            <Right>
-                                <Text style={commonStyles.greenText}>
-                                    Spring 2019
-                                </Text>
-                            </Right>
-                            
-                        </CardItem>
-                        <CardItem bordered style={commonStyles.cardItem}>
-                            <Icon active type="Ionicons" name="ios-star" style={commonStyles.cardIcon} />
-                            <Text style={commonStyles.lightText}>
-                                Current GPA: 
-                            </Text>
-                            <Right>
-                                <Text style={commonStyles.greenText}>
-                                    {this.props.currentUser.profile.currentGPA}
-                                </Text>
-                            </Right>
-                            </CardItem>
-                        <CardItem bordered style={commonStyles.cardItem}>
-                            <Icon active type="Ionicons" name="ios-star" style={commonStyles.cardIcon} />
-                            <Text style={commonStyles.lightText}>
-                                Major GPA: 
-                            </Text>
-                            <Right>
-                                <Text style={commonStyles.greenText}>
-                                    3.82
-                                </Text>
-                            </Right>
-                        </CardItem>
-                    </Card>
-                </Content>
+                
+                {this.props.currentUser ? this.renderHomeContent() : <React.Fragment />}
             </Container>
         )
     }

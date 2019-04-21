@@ -4,7 +4,7 @@ import { StyleSheet, StatusBar, Image, TextInput, Platform } from 'react-native'
 import Meteor, { Accounts, withTracker } from 'react-native-meteor';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, Input, Form, Label, Picker, Content, Title, List, Button, Item, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
+import { Container, Input, Grid, Row, Col, Form, Label, Picker, Content, Title, List, Button, Item, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
 import { commonStyles } from '../../Styles';
 import Header from '../../Components/Header';
 import { alertError, alertSuccess } from '../../Alerts';
@@ -20,15 +20,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     pickerAndroid: {
-        minWidth: 30,
-        color: variables.brandPrimary,
-        marginLeft: 10,
-        maxWidth: 200
+        color: variables.greenText,
     },
     pickerIOS: {
-        minWidth: 30,
-        marginLeft: 10,
-        maxWidth: 200 
     }
 });
 
@@ -56,7 +50,7 @@ class Settings extends Component {
     }
 
     handleSaveProfile = () => {
-        const { netID, fName, lName, hoursTaken, currentGPA, major } = this.state;
+        const { fName, lName, hoursTaken, currentGPA, major } = this.state;
         
         const data = {
             firstName: fName,
@@ -82,86 +76,108 @@ class Settings extends Component {
         });
     }
 
+    renderSettingsContent = () => {
+        const { fName, lName, hoursTaken, currentGPA, major } = this.state;
+        return (
+            <Content padder>
+            {this.props.currentUser ? 
+                <Form>
+                    <Grid>
+                        <Row>
+                            <Col>
+                                <Text style={commonStyles.settingsItem}>First Name:</Text>
+                            </Col>
+                            <Col>
+                                <Item> 
+                                    <Input label="First Name" placeholderTextColor={variables.brandPrimary} value={fName} style={{color: variables.brandPrimary}} placeholder="Current First Name" onChangeText={(text) => this.setState({ fName: text })}></Input>
+                                </Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Text style={commonStyles.settingsItem}>Last Name:</Text>
+                            </Col>
+                            <Col>
+                                <Item>   
+                                    <Input placeholderTextColor={variables.brandPrimary} value={lName} style={{color: variables.brandPrimary}} placeholder="Current Last Name" onChangeText={(text) => this.setState({ lName: text })}></Input>
+                                </Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col style={{width: 130}}>
+                                <Text style={commonStyles.settingsPicker}>
+                                    Major: 
+                                </Text>
+                            </Col>
+                            <Col>
+                                <Item>
+                                    <Picker
+                                        mode="dialog"
+                                        iosHeader="Select major"
+                                        iosIcon={<Icon style={commonStyles.greenText} name="arrow-down" />}
+                                        itemTextStyle= {{ color: variables.brandPrimary}}
+                                        headerStyle = {{ backgroundColor: variables.containerBgColor}}
+                                        textStyle = {{ color: variables.brandPrimary}}
+                                        style={ platform === "ios" ? styles.pickerIOS : styles.pickerAndroid}
+                                        headerBackButtonTextStyle= {{ color: variables.brandPrimary }}
+                                        headerTitleStyle={{ color: '#ffffff' }}
+                                        selectedValue={major}
+                                        onValueChange={this.onValueChange.bind(this)}
+                                        >
+                                        {/* TODO: load these from the back end? */}
+                                        <Picker.Item label="Computer Engineering" value="Computer Engineering" />
+                                        <Picker.Item label="Computer Science" value="Computer Science" />
+                                        <Picker.Item label="Software Engineering" value="Software Engineering" />
+                                    </Picker>
+                                </Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            
+                            <Col>
+                                <Text style={commonStyles.settingsItem}>Hours Completed:</Text>
+                            </Col>
+                            <Col>    
+                                <Item>   
+                                    <Input placeholderTextColor={variables.brandPrimary} value={String(hoursTaken)} style={{color: variables.brandPrimary}} placeholder="Hours Completed" onChangeText={(text) => this.setState({ hoursTaken: text })}></Input>
+                                </Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Left>
+                                    <Text style={commonStyles.lightText}>Current GPA:</Text>
+                                </Left>
+                            </Col>
+                            <Col>
+                                <Item> 
+                                    <Input placeholderTextColor={variables.brandPrimary} value={String(currentGPA)} style={{color: variables.brandPrimary}} placeholder="Current GPA" onChangeText={(text) => this.setState({ currentGPA: text })}></Input>
+                                </Item>
+                            </Col>
+                        </Row>
+                    </Grid>
+                </Form> 
+                : <React.Fragment />
+                }
+                <Button rounded onPress={() => {
+                    this.handleSignOut()
+                    console.log(this.props.currentUser.profile)
+                }} style={styles.logoutButton}>
+                    <Text>
+                        Log Out
+                    </Text>
+                </Button>
+            </Content>
+        );
+    }
+
     render() {
         const { fName, lName, hoursTaken, currentGPA, major } = this.state;
         return (
             <Container style={commonStyles.container}>
-                <Header headerTitle="Settings" iconName="ios-save" iconAction={() => {this.handleSaveProfile()}} />
-                <Content padder>
-                {this.props.currentUser ? 
-                    <Form>
-                        <Item>
-                            <Left>
-                                <Text style={commonStyles.lightText}>First Name:</Text>
-                            </Left>
-                                
-                            <Input label="First Name" placeholderTextColor={variables.brandPrimary} value={fName} style={{color: variables.brandPrimary}} placeholder="Current First Name" onChangeText={(text) => this.setState({ fName: text })}></Input>
-                            
-                        </Item>
-                        <Item>
-                            <Left>
-                                <Text style={commonStyles.lightText}>Last Name:</Text>
-                            </Left>
-                            
-                                
-                            <Input placeholderTextColor={variables.brandPrimary} value={lName} style={{color: variables.brandPrimary}} placeholder="Current Last Name" onChangeText={(text) => this.setState({ lName: text })}></Input>
-                            
-                        </Item>
-                        <Item>
-                            <Left>
-                                <Text style={commonStyles.lightText}>
-                                    Major: 
-                                </Text>
-                            </Left>
-                                <Picker
-                                    mode="dialog"
-                                    iosHeader="Select major"
-                                    iosIcon={<Icon style={commonStyles.greenText} name="arrow-down" />}
-                                    itemTextStyle= {{ color: variables.brandPrimary}}
-                                    headerStyle = {{ backgroundColor: variables.containerBgColor}}
-                                    textStyle = {{ color: variables.brandPrimary}}
-                                    style={ platform === "ios" ? styles.pickerIOS : styles.pickerAndroid}
-                                    headerBackButtonTextStyle= {{ color: variables.brandPrimary }}
-                                    headerTitleStyle={{ color: '#ffffff' }}
-                                    selectedValue={major}
-                                    onValueChange={this.onValueChange.bind(this)}
-                                    >
-                                    {/* TODO: load these from the back end? */}
-                                    <Picker.Item label="Computer Engineering" value="Computer Engineering" />
-                                    <Picker.Item label="Computer Science" value="Computer Science" />
-                                    <Picker.Item label="Software Engineering" value="Software Engineering" />
-                                </Picker>
-                        </Item>
-                        <Item>
-                            <Left>
-                                <Text style={commonStyles.lightText}>Hours Completed:</Text>
-                            </Left>
-                            
-                                
-                            <Input placeholderTextColor={variables.brandPrimary} value={String(hoursTaken)} style={{color: variables.brandPrimary}} placeholder="Hours Completed" onChangeText={(text) => this.setState({ hoursTaken: text })}></Input>
-                            
-                        </Item>
-                        <Item>
-                            <Left>
-                                <Text style={commonStyles.lightText}>Current GPA:</Text>
-                            </Left>
-                            
-                                
-                            <Input placeholderTextColor={variables.brandPrimary} value={String(currentGPA)} style={{color: variables.brandPrimary}} placeholder="Current GPA" onChangeText={(text) => this.setState({ currentGPA: text })}></Input>
-                            
-                        </Item>
-                    </Form> 
-                    : <React.Fragment />
-                    }
-                    <Button rounded onPress={() => {
-                        this.handleSignOut()
-                        console.log(this.props.currentUser.profile)
-                    }} style={styles.logoutButton}>
-                        <Text>
-                            Log Out
-                        </Text>
-                    </Button>
-                </Content>
+                {this.props.currentUser ? <Header headerTitle="Settings" iconName="ios-save" iconAction={() => {this.handleSaveProfile()}} />
+                    : <React.Fragment />}
+                {this.props.currentUser ?this.renderSettingsContent() : <React.Fragment />}
             </Container>
         );
     }

@@ -86,7 +86,7 @@ const primaryRouteStack = createStackNavigator({
         screen: loggedInStack,
         navigationOptions: {
             header: null,
-            
+            gesturesEnabled: false,
             title: "DegreeMonitor"
         }
     }

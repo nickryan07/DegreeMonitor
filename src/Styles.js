@@ -1,5 +1,6 @@
-import { StyleSheet, StatusBar, Image } from 'react-native';
+import { StyleSheet, StatusBar, Image, Platform } from 'react-native';
 import variables from "../native-base-theme/variables/commonColor";
+
 
 export const commonStyles = StyleSheet.create({
     container: {
@@ -50,6 +51,16 @@ export const commonStyles = StyleSheet.create({
         color: variables.brandTextLight,
     },
     listItemStyle: {
-        paddingBottom: 100
-    }
+        paddingBottom: 10
+    },
+    settingsItem: {
+        marginTop: 18,
+        marginLeft: 10,
+        color: variables.brandTextLight
+    },
+    settingsPicker: {
+        marginTop: 14,
+        marginLeft: 10,
+        color: variables.brandTextLight
+    },
 });
