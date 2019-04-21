@@ -45,7 +45,7 @@ class Homepage extends Component {
                 <Content padder>
                     <Card style={commonStyles.card}>
                         <H1 style={commonStyles.title}>
-                            Welcome, {name}!
+                            Welcome, {this.props.currentUser.profile.firstName}!
                         </H1>
                     </Card>
                     <Card style={commonStyles.card}>
@@ -57,7 +57,7 @@ class Homepage extends Component {
                     </Card>
                     <Card style={commonStyles.card}>
                         <H3 style={commonStyles.title}>
-                            Current GPA: 3.69
+                            Current GPA: {this.props.currentUser.profile.currentGPA}
                             {"\n"}
                             Major GPA: 3.82
                         </H3>

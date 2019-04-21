@@ -7,6 +7,7 @@ import variables from "../../../native-base-theme/variables/commonColor";
 import { Container, Input, Form, Label, Picker, Content, Title, List, Button, Item, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
 import { commonStyles } from '../../Styles';
 import Header from '../../Components/Header';
+import { alertError, alertSuccess } from '../../Alerts';
 
 
 const platform = Platform.OS;
@@ -52,6 +53,27 @@ class Settings extends Component {
         })
     }
 
+    handleSaveProfile = () => {
+        const { netID, fName, lName, hoursTaken, currentGPA, major } = this.state;
+        
+        const data = {
+            firstName: fName,
+            lastName: lName,
+            hoursTaken: Number(hoursTaken),
+            currentGPA: Number(currentGPA),
+            major: major,
+        }
+
+        Meteor.call('updateProfile', data, (err) => {
+            if(err) {
+                alertError(err.reason);
+            } else {
+                alertSuccess('Profile Updated!');
+            }
+
+        });
+    }
+
     onValueChange(value) {
         this.setState({
             major: value
@@ -62,7 +84,7 @@ class Settings extends Component {
         const { fName, lName, hoursTaken, currentGPA, major } = this.state;
         return (
             <Container style={commonStyles.container}>
-                <Header headerTitle="Settings" iconName="ios-save"/>
+                <Header headerTitle="Settings" iconName="ios-save" iconAction={() => {this.handleSaveProfile()}} />
                 <Content padder>
                 {this.props.currentUser ? 
                     <Form>
@@ -71,7 +93,7 @@ class Settings extends Component {
                                 <Text style={commonStyles.lightText}>First Name</Text>
                             </Left>
                                 
-                            <Input label="First Name" placeholderTextColor={variables.brandPrimary} value={fName} style={{color: variables.brandPrimary}} placeholder="Current Name"></Input>
+                            <Input label="First Name" placeholderTextColor={variables.brandPrimary} value={fName} style={{color: variables.brandPrimary}} placeholder="Current First Name" onChangeText={(text) => this.setState({ fName: text })}></Input>
                             
                         </Item>
                         <Item>
@@ -80,7 +102,7 @@ class Settings extends Component {
                             </Left>
                             
                                 
-                            <Input placeholderTextColor={variables.brandPrimary} value={lName} style={{color: variables.brandPrimary}} placeholder="Current Last Name"></Input>
+                            <Input placeholderTextColor={variables.brandPrimary} value={lName} style={{color: variables.brandPrimary}} placeholder="Current Last Name" onChangeText={(text) => this.setState({ lName: text })}></Input>
                             
                         </Item>
                         <Item>
@@ -114,7 +136,7 @@ class Settings extends Component {
                             </Left>
                             
                                 
-                            <Input placeholderTextColor={variables.brandPrimary} value={String(hoursTaken)} style={{color: variables.brandPrimary}} placeholder="Hours Completed"></Input>
+                            <Input placeholderTextColor={variables.brandPrimary} value={String(hoursTaken)} style={{color: variables.brandPrimary}} placeholder="Hours Completed" onChangeText={(text) => this.setState({ hoursTaken: text })}></Input>
                             
                         </Item>
                         <Item>
@@ -123,7 +145,7 @@ class Settings extends Component {
                             </Left>
                             
                                 
-                            <Input placeholderTextColor={variables.brandPrimary} value={String(currentGPA)} style={{color: variables.brandPrimary}} placeholder="Current GPA"></Input>
+                            <Input placeholderTextColor={variables.brandPrimary} value={String(currentGPA)} style={{color: variables.brandPrimary}} placeholder="Current GPA" onChangeText={(text) => this.setState({ currentGPA: text })}></Input>
                             
                         </Item>
                     </Form> 
