@@ -16,13 +16,17 @@ const styles = StyleSheet.create({
         minWidth: 80
     }, 
     logoutButton: {
-        margin: 20,
+        margin: 50,
         alignSelf: 'center'
     },
     pickerAndroid: {
-        color: variables.greenText,
+        color: variables.brandPrimary,
     },
     pickerIOS: {
+
+    },
+    settingsLabel: {
+        width: 155
     }
 });
 
@@ -84,7 +88,7 @@ class Settings extends Component {
                 <Form>
                     <Grid>
                         <Row>
-                            <Col>
+                            <Col style={styles.settingsLabel}>
                                 <Text style={commonStyles.settingsItem}>First Name:</Text>
                             </Col>
                             <Col>
@@ -94,7 +98,7 @@ class Settings extends Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
+                            <Col style={styles.settingsLabel}>
                                 <Text style={commonStyles.settingsItem}>Last Name:</Text>
                             </Col>
                             <Col>
@@ -104,7 +108,7 @@ class Settings extends Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col style={{width: 130}}>
+                            <Col style={styles.settingsLabel}>
                                 <Text style={commonStyles.settingsPicker}>
                                     Major: 
                                 </Text>
@@ -114,7 +118,7 @@ class Settings extends Component {
                                     <Picker
                                         mode="dialog"
                                         iosHeader="Select major"
-                                        iosIcon={<Icon style={commonStyles.greenText} name="arrow-down" />}
+                                        iosIcon={<Icon style={commonStyles.brandPrimary} name="arrow-down" />}
                                         itemTextStyle= {{ color: variables.brandPrimary}}
                                         headerStyle = {{ backgroundColor: variables.containerBgColor}}
                                         textStyle = {{ color: variables.brandPrimary}}
@@ -134,7 +138,7 @@ class Settings extends Component {
                         </Row>
                         <Row>
                             
-                            <Col>
+                            <Col style={styles.settingsLabel}>
                                 <Text style={commonStyles.settingsItem}>Hours Completed:</Text>
                             </Col>
                             <Col>    
@@ -144,10 +148,8 @@ class Settings extends Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col>
-                                <Left>
-                                    <Text style={commonStyles.lightText}>Current GPA:</Text>
-                                </Left>
+                            <Col style={styles.settingsLabel}>
+                                <Text style={commonStyles.settingsItem}>Current GPA:</Text>
                             </Col>
                             <Col>
                                 <Item> 
