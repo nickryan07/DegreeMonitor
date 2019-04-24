@@ -44,9 +44,41 @@ class GPA extends Component {
 
         this.state = {
             showingAddSemester: false,
+            showingAddCourse: false,
             newSemester: '',
             newYear: '',
+            newCourse: '',
+            newCourseGrade: '',
+            selectedSemester: '',
         }
+    }
+
+    addSemester = () => {
+        const { newSemester, newYear, showingAddSemester} = this.state;
+
+        Meteor.call('addSemester', newSemester, newYear, (err) => {
+            //console.log(err);
+        });
+        this.setState({
+            showingAddSemester: !showingAddSemester,
+            newSemester: '',
+        });
+    }
+
+    addCourse = () => {
+        const { newCourse, newCourseGrade, showingAddCourse, selectedSemester} = this.state;
+        if(selectedSemester === '') {
+            return;
+        }
+        Meteor.call('addCourse', newCourse, newCourseGrade, selectedSemester, (err) => {
+            //console.log(err);
+        });
+        this.setState({
+            showingAddCourse: !showingAddCourse,
+            newCourse: '',
+            newCourseGrade: '',
+            selectedSemester: '',
+        });
     }
 
     renderAddSemester = () => {
@@ -69,25 +101,32 @@ class GPA extends Component {
     }
 
     renderAddCourse = () => {
-        const { showingAddSemester } = this.state;
+        const { showingAddCourse } = this.state;
 
         return (
-            <Dialog.Container visible={showingAddSemester}>
+            <Dialog.Container visible={showingAddCourse}>
                 <Dialog.Title>
                     Add Course
                 </Dialog.Title>
                 <Dialog.Description>
                     Add a new course result.
                 </Dialog.Description>
-                <Dialog.Input onChangeText={(newSemester) => this.setState({newSemester})} placeholder="Course Identifier" />
-                <Dialog.Input onChangeText={(newYear) => this.setState({newYear})} placeholder="Grade Received" />
-                <Dialog.Button label="Cancel" onPress={() => {this.setState({showingAddSemester: !showingAddSemester})}}/>
+                <Dialog.Input onChangeText={(newCourse) => this.setState({newCourse})} placeholder="Course Identifier" />
+                <Dialog.Input onChangeText={(newCourseGrade) => this.setState({newCourseGrade})} placeholder="Grade Received" />
+                <Dialog.Button label="Cancel" onPress={() => {this.setState({showingAddCourse: !showingAddCourse})}}/>
                 <Dialog.Button label="Add" onPress={() => {this.addCourse()}}/>
             </Dialog.Container>
         );
     }
 
-    renderCourses = courses => {
+    renderCourses = (semesterId) => {
+        let courses = this.props.currentUser.profile.courses.filter(course => {
+            //console.log(course.semesterId, semesterId, course.semesterId._str === semesterId._str)
+            return course.semesterId._str === semesterId._str;
+        });
+        if(courses.length === 0) {
+            return;
+        }
         return (
             courses.map((course, i) => (
 
@@ -101,7 +140,7 @@ class GPA extends Component {
                 rightOpenValue={-75}
                 body={
                     <View>
-                      <Text style={{color: variables.brandPrimary}}>{course[1]}</Text>
+                      <Text style={{color: variables.brandPrimary}}>{course.courseName}</Text>
                     </View>
                 }
                 right={
@@ -116,7 +155,7 @@ class GPA extends Component {
     }
 
     render() {
-        const { showingAddSemester } = this.state;
+        const { showingAddSemester, showingAddCourse } = this.state;
 
         return (
             <Container>
@@ -125,19 +164,22 @@ class GPA extends Component {
                 <Header headerTitle="Courses" iconName="md-add" iconAction={() => {this.setState({showingAddSemester: !showingAddSemester})}} />
                 <Content>
                     
-                        {testData.map((semester, i) => {
+                        {this.props.currentUser.profile.semestersGPA.map((semester, i) => {
                             return(
                             <List key={i}>
                                 <ListItem itemDivider style={{backgroundColor: variables.brandTextLight}}>
                                     
                                     <Text >
-                                        {String(semester.semester +  ' ' + semester.year)}
+                                        {String(semester.semesterName + ' ' + semester.semesterYear)}
                                     </Text>
                                     
                                 
                                 </ListItem>
-                                {this.renderCourses(semester.courses)}
-                                <Button iconLeft rounded style={styles.addButton}>
+                                {this.renderCourses(semester._id)}
+                                <Button iconLeft rounded style={styles.addButton} onPress={() => {
+                                    this.setState({selectedSemester: semester._id}, () => {
+                                        this.setState({showingAddCourse: !showingAddCourse})
+                                    })}}>
                                     <Icon type="Entypo" name="add-to-list" />
                                     <Text>
                                         Add Course
