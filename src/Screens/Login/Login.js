@@ -122,7 +122,7 @@ class Login extends Component {
                             </Right>
                         </ListItem>
                     </Form>
-                    {this.props.loggingIn ? <WaveIndicator style={styles.activity} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/> :
+                    {this.props.isLoggingIn ? <WaveIndicator style={styles.activity} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/> :
                     <Button rounded onPress={() => {
                         this.handleSignIn()
                     }} style={styles.loginButton}>

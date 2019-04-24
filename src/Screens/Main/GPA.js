@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 
 import { StyleSheet, StatusBar, Image, TextInput, Platform } from 'react-native';
 import Meteor, { Accounts, withTracker } from 'react-native-meteor';
+import Dialog from 'react-native-dialog';
 
 import variables from "../../../native-base-theme/variables/commonColor";
 import { Container, Accordion, View, Content, Title, List, Button, SwipeRow, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
 import { commonStyles } from '../../Styles';
 import Header from '../../Components/Header';
 
-const dataArray = [
-    { title: "Fall 2018", courses: ["CSE 4345", "A"] },
-    { title: "Spring 2019", courses: [] },
-    { title: "Summer 2019", courses: [] }
-];
 
 const testData = [
     { semester: 'Fall', year: '2018', courses: [
@@ -37,7 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: variables.containerBgColor,
     },
     addButton: {
-        margin: 20,
+        margin: 6,
         alignSelf: 'center'
     },
 });
@@ -47,50 +43,47 @@ class GPA extends Component {
         super(props);
 
         this.state = {
-
+            showingAddSemester: false,
+            newSemester: '',
+            newYear: '',
         }
     }
 
-    _renderHeader(item, expanded) {
+    renderAddSemester = () => {
+        const { showingAddSemester } = this.state;
+
         return (
-            <View style={{
-                flexDirection: "row",
-                padding: 10,
-                justifyContent: "space-between",
-                alignItems: "center" ,
-                //backgroundColor: "#A9DAD6" }}>
-                backgroundColor: variables.brandTextLight }}>
-                <Text style={{ fontWeight: "600", color: variables.containerBgColor }}>
-                    {" "}{item.title}
-                </Text>
-                {expanded
-                    ? <Icon style={{ fontSize: 18 }} name="arrow-down" />
-                    : <Icon style={{ fontSize: 18 }} name="arrow-up" />}
-            </View>
+            <Dialog.Container visible={showingAddSemester}>
+                <Dialog.Title>
+                    Add Semester
+                </Dialog.Title>
+                <Dialog.Description>
+                    Add a new semester to begin adding courses.
+                </Dialog.Description>
+                <Dialog.Input onChangeText={(newSemester) => this.setState({newSemester})} placeholder="Session" />
+                <Dialog.Input onChangeText={(newYear) => this.setState({newYear})} placeholder="Year" />
+                <Dialog.Button label="Cancel" onPress={() => {this.setState({showingAddSemester: !showingAddSemester})}}/>
+                <Dialog.Button label="Add" onPress={() => {this.addSemester()}}/>
+            </Dialog.Container>
         );
     }
-    _renderContent(item) {
-        return (
-            <Content>
 
-                <Text
-                    style={{
-                    backgroundColor: "#e3f1f1",
-                    padding: 10,
-                    fontStyle: "italic",
-                    }}
-                >
-                    {item.courses[0]}
-                </Text>
-                <Button rounded onPress={() => {
-                    //this.handleSignOut()
-                    //console.log(this.props.currentUser.profile)
-                }} style={styles.addButton}>
-                    <Text>
-                        Add Course
-                    </Text>
-                </Button>
-            </Content>
+    renderAddCourse = () => {
+        const { showingAddSemester } = this.state;
+
+        return (
+            <Dialog.Container visible={showingAddSemester}>
+                <Dialog.Title>
+                    Add Course
+                </Dialog.Title>
+                <Dialog.Description>
+                    Add a new course result.
+                </Dialog.Description>
+                <Dialog.Input onChangeText={(newSemester) => this.setState({newSemester})} placeholder="Course Identifier" />
+                <Dialog.Input onChangeText={(newYear) => this.setState({newYear})} placeholder="Grade Received" />
+                <Dialog.Button label="Cancel" onPress={() => {this.setState({showingAddSemester: !showingAddSemester})}}/>
+                <Dialog.Button label="Add" onPress={() => {this.addCourse()}}/>
+            </Dialog.Container>
         );
     }
 
@@ -123,20 +116,33 @@ class GPA extends Component {
     }
 
     render() {
+        const { showingAddSemester } = this.state;
+
         return (
             <Container>
-                <Header headerTitle="Courses" iconName="md-add-circle-outline" iconAction={() => {}} />
+                {this.renderAddSemester()}
+                {this.renderAddCourse()}
+                <Header headerTitle="Courses" iconName="md-add" iconAction={() => {this.setState({showingAddSemester: !showingAddSemester})}} />
                 <Content>
                     
                         {testData.map((semester, i) => {
                             return(
                             <List key={i}>
-                            <ListItem itemDivider style={{backgroundColor: variables.brandTextLight}}>
-                                <Text >
-                                    {String(semester.semester +  ' ' + semester.year)}
-                                </Text>
-                            </ListItem>
-                            {this.renderCourses(semester.courses)}
+                                <ListItem itemDivider style={{backgroundColor: variables.brandTextLight}}>
+                                    
+                                    <Text >
+                                        {String(semester.semester +  ' ' + semester.year)}
+                                    </Text>
+                                    
+                                
+                                </ListItem>
+                                {this.renderCourses(semester.courses)}
+                                <Button iconLeft rounded style={styles.addButton}>
+                                    <Icon type="Entypo" name="add-to-list" />
+                                    <Text>
+                                        Add Course
+                                    </Text>
+                                </Button>
                             </List>
                             )
                         })}
