@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, StatusBar, Image, TextInput, Platform } from 'react-native';
 import Meteor, { Accounts, withTracker } from 'react-native-meteor';
 import Dialog from 'react-native-dialog';
+import { WaveIndicator } from 'react-native-indicators';
 
 import variables from "../../../native-base-theme/variables/commonColor";
 import { Container, Accordion, View, Content, Title, List, Button, SwipeRow, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
@@ -10,20 +11,6 @@ import { commonStyles } from '../../Styles';
 import Header from '../../Components/Header';
 
 
-const testData = [
-    { semester: 'Fall', year: '2018', courses: [
-        ['CSE', '4314', 'A'],
-        ['CSE', '4310', 'B'],
-        ['CSE', '4305', 'A'],
-        ['CSE', '4316', 'A'],
-    ]},
-    {semester: 'Spring', year: '2019', courses: [
-        ['CSE', '4314', 'A'],
-        ['CSE', '4310', 'B'],
-        ['CSE', '4305', 'A'],
-        ['CSE', '4316', 'A'],
-    ]}
-]
 
 const styles = StyleSheet.create({
     accordion: {
@@ -78,6 +65,12 @@ class GPA extends Component {
             newCourse: '',
             newCourseGrade: '',
             selectedSemester: '',
+        });
+    }
+
+    removeCourse = courseId => {
+        Meteor.call('removeCourse', courseId, (err) => {
+            //console.log(err);
         });
     }
 
@@ -144,11 +137,10 @@ class GPA extends Component {
                     </View>
                 }
                 right={
-                    <Button danger onPress={() => alert('Trash')}>
+                    <Button danger onPress={() => {this.removeCourse(course._id)}}>
                       <Icon active name="trash" />
                     </Button>
                 }>
-                
             </SwipeRow>
             ))
         )
@@ -164,7 +156,7 @@ class GPA extends Component {
                 <Header headerTitle="Courses" iconName="md-add" iconAction={() => {this.setState({showingAddSemester: !showingAddSemester})}} />
                 <Content>
                     
-                        {this.props.currentUser.profile.semestersGPA.map((semester, i) => {
+                        {this.props.currentUser ? this.props.currentUser.profile.semestersGPA.map((semester, i) => {
                             return(
                             <List key={i}>
                                 <ListItem itemDivider style={{backgroundColor: variables.brandTextLight}}>
@@ -187,7 +179,7 @@ class GPA extends Component {
                                 </Button>
                             </List>
                             )
-                        })}
+                        }): <WaveIndicator style={styles.activity} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/>}
                 </Content>
             </Container>
         );

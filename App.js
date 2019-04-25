@@ -37,6 +37,7 @@ class App extends React.Component {
             'Roboto': require('native-base/Fonts/Roboto.ttf'),
             'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
             'Ionicons': require('@expo/vector-icons/fonts/Ionicons.ttf'),
+            'Entypo': require('@expo/vector-icons/fonts/Entypo.ttf'),
         });
         
         this.setState({fontsLoaded: true});
