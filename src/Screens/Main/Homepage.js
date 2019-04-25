@@ -56,7 +56,7 @@ class Homepage extends Component {
                         width={12}
                         fill={Math.round((this.props.currentUser.profile.hoursTaken/121)*100)}
                         tintColor={variables.brandPrimary}
-                        onAnimationComplete={() => console.log('onAnimationComplete')}
+                        onAnimationComplete={() => {}}
                         backgroundColor={variables.containerBgColor}>
                         {
                             (fill) => (

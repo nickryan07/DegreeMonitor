@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     },
     addButton: {
         margin: 6,
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
 });
 
@@ -146,16 +146,44 @@ class GPA extends Component {
         )
     }
 
+    getGradePoints = (grade) => {
+        switch(grade) {
+            case 'A':
+                return 4;
+            case 'B':
+                return 3;
+            case 'C':
+                return 2;
+            case 'D':
+                return 1;
+            case 'F':
+                return 0;
+            default:
+                return 0;
+        }
+    }
+
+    getCreditHours = (course) => {
+        let courseCode = course.split(' ')[1];
+        return Number(courseCode.charAt(1));
+    }
+
     calculateGPA = (semesterId) => {
         let courses = this.props.currentUser.profile.courses.filter(course => {
-            //console.log(course.semesterId, semesterId, course.semesterId._str === semesterId._str)
             return course.semesterId._str === semesterId._str;
         });
         if(courses.length === 0) {
-            return "GPA: ";
+            return "GPA: " + String(parseFloat(Math.round((0) * 100) / 100).toFixed(2));
         } else {
-            //let GPA = 
-            return "GPA: ";
+            let gradePoints = 0, creditHours = 0;
+            courses.map((course, i) => {
+                gradePoints += (this.getGradePoints(course.courseGrade)*this.getCreditHours(course.courseName));
+                creditHours += this.getCreditHours(course.courseName);
+            });
+            if(creditHours === 0) {
+                return "GPA: " + String(parseFloat(Math.round((0) * 100) / 100).toFixed(2));
+            }
+            return "GPA: " + String(parseFloat(Math.round((gradePoints/creditHours) * 100) / 100).toFixed(2));
         }
     }
 
