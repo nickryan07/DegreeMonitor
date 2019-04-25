@@ -146,6 +146,18 @@ class GPA extends Component {
         )
     }
 
+    calculateGPA = () => {
+        let courses = this.props.currentUser.profile.courses.filter(course => {
+            //console.log(course.semesterId, semesterId, course.semesterId._str === semesterId._str)
+            return course.semesterId._str === semesterId._str;
+        });
+        if(courses.length === 0) {
+            return "GPA: ";
+        } else {
+            //let GPA = 
+        }
+    }
+
     render() {
         const { showingAddSemester, showingAddCourse } = this.state;
 
@@ -160,11 +172,17 @@ class GPA extends Component {
                             return(
                             <List key={i}>
                                 <ListItem itemDivider style={{backgroundColor: variables.brandTextLight}}>
-                                    
-                                    <Text >
+                                    <Left>
+                                    <Text>
                                         {String(semester.semesterName + ' ' + semester.semesterYear)}
                                     </Text>
-                                    
+                                    </Left>
+                                    <Right>
+                                        
+                                    <Text >
+                                        {this.calculateGPA()}
+                                    </Text>
+                                    </Right>
                                 
                                 </ListItem>
                                 {this.renderCourses(semester._id)}
