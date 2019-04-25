@@ -146,7 +146,7 @@ class GPA extends Component {
         )
     }
 
-    calculateGPA = () => {
+    calculateGPA = (semesterId) => {
         let courses = this.props.currentUser.profile.courses.filter(course => {
             //console.log(course.semesterId, semesterId, course.semesterId._str === semesterId._str)
             return course.semesterId._str === semesterId._str;
@@ -155,6 +155,7 @@ class GPA extends Component {
             return "GPA: ";
         } else {
             //let GPA = 
+            return "GPA: ";
         }
     }
 
@@ -180,7 +181,7 @@ class GPA extends Component {
                                     <Right>
                                         
                                     <Text >
-                                        {this.calculateGPA()}
+                                        {this.calculateGPA(semester._id)}
                                     </Text>
                                     </Right>
                                 
