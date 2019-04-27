@@ -7,6 +7,7 @@ import { Container, H2, H1, H3, Icon, Form, Text, Input, Item, Content, Card, Ca
 import { commonStyles } from '../../Styles';
 import Header from '../../Components/Header';
 
+import { WaveIndicator } from 'react-native-indicators';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
 
@@ -16,11 +17,21 @@ class Homepage extends Component {
 
         this.state = { 
             fill: Math.round((props.currentUser.profile.hoursTaken/121)*100),
+            waiting: true,
         }
     }
 
+    componentWillMount() {
+        
+    }
+
     componentDidMount() {
-        this.circularProgress.animate(Math.round((this.props.currentUser.profile.hoursTaken/121)*100), 2500, Easing.quad);
+        let ref = this;
+        setTimeout(function(){ 
+            ref.setState({waiting: false});
+            ref.circularProgress.animate(Math.round((ref.props.currentUser.profile.hoursTaken/121)*100), 2500, Easing.quad);
+        }, 500);
+        
     }
 
     /**
@@ -38,7 +49,38 @@ class Homepage extends Component {
             return "Junior";
         } else if(this.props.currentUser.profile.hoursTaken <= 160) {
             return "Senior";
+        } else {
+            return "Unknown";
         }
+    }
+
+    getGradePoints = (grade) => {
+        switch(grade) {
+            case 'A':
+                return 4;
+            case 'B':
+                return 3;
+            case 'C':
+                return 2;
+            case 'D':
+                return 1;
+            case 'F':
+                return 0;
+            default:
+                return 0;
+        }
+    }
+
+    calculateGPA = () => {
+        let currentCredits = (this.props.currentUser.profile.hoursTaken*this.props.currentUser.profile.currentGPA);
+        let courseHours = this.props.currentUser.profile.hoursTaken;
+        this.props.currentUser.profile.courses.map(course => {
+            let name = course.courseName.replace(/\s+/g, '');
+            let courseDigits = name.substr(name.length - 4);
+            currentCredits += Number(courseDigits.charAt(1)) * this.getGradePoints(course.courseGrade);
+            courseHours += Number(courseDigits.charAt(1));
+        });
+        return currentCredits / courseHours;
     }
 
     renderHomeContent = () => {
@@ -99,7 +141,9 @@ class Homepage extends Component {
                         </Text>
                         <Right>
                             <Text style={commonStyles.greenText}>
-                                {this.props.currentUser.profile.currentGPA}
+                                {//this.props.currentUser.profile.currentGPA
+                                String(parseFloat(Math.round((this.calculateGPA()) * 100) / 100).toFixed(2))
+                                }
                             </Text>
                         </Right>
                         </CardItem>
@@ -125,7 +169,7 @@ class Homepage extends Component {
             <Container>
                 <Header headerTitle="Home" iconName="ios-home" iconAction={() => {}}/>
                 
-                {this.props.currentUser ? this.renderHomeContent() : <React.Fragment />}
+                {!this.state.waiting ? this.renderHomeContent() : <WaveIndicator style={{margin: 12}} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/>}
             </Container>
         )
     }
