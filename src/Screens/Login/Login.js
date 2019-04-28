@@ -3,7 +3,7 @@ import { StyleSheet, StatusBar, Image } from 'react-native';
 import Meteor, { Accounts, withTracker } from 'react-native-meteor';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right, Toast } from 'native-base';
+import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, ListItem, Left, Right } from 'native-base';
 import { Switch } from 'react-native-base-switch';
 import { WaveIndicator } from 'react-native-indicators';
 import { commonStyles } from '../../Styles';

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, StatusBar, Image, Platform } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import Meteor, { Accounts, withTracker } from 'react-native-meteor';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, Body, ListItem, Left, Right, Toast, Picker, Grid, Label, Row, Col } from 'native-base';
-import { Switch } from 'react-native-base-switch';
+import { Container, H2, Icon, Form, Text, Input, Item, Content, Card, Button, Left, Picker, Grid, Row, Col } from 'native-base';
 import { WaveIndicator } from 'react-native-indicators';
 import { commonStyles } from '../../Styles';
 

@@ -202,15 +202,15 @@ class GPA extends Component {
                             <List key={i}>
                                 <ListItem itemDivider style={{backgroundColor: variables.brandTextLight}}>
                                     <Left>
-                                    <Text>
-                                        {String(semester.semesterName + ' ' + semester.semesterYear)}
-                                    </Text>
+                                        <Text>
+                                            {String(semester.semesterName + ' ' + semester.semesterYear)}
+                                        </Text>
                                     </Left>
                                     <Right>
                                         
-                                    <Text >
-                                        {this.calculateGPA(semester._id)}
-                                    </Text>
+                                        <Text >
+                                            {this.calculateGPA(semester._id)}
+                                        </Text>
                                     </Right>
                                 
                                 </ListItem>

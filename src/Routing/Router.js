@@ -8,6 +8,7 @@ import CreateAccount from '../Screens/Login/CreateAccount';
 import Homepage from '../Screens/Main/Homepage';
 import Settings from '../Screens/Main/Settings';
 import GPA from '../Screens/Main/GPA';
+import Advising from '../Screens/Main/Advising';
 import { Icon } from 'native-base';
 import { commonStyles } from '../Styles';
 
@@ -34,7 +35,7 @@ const loggedInStack = createBottomTabNavigator({
         }
     },
     Advising: {
-        screen: Homepage,
+        screen: Advising,
         navigationOptions: {
             headerLeft: null,
         }
