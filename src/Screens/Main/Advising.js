@@ -170,11 +170,7 @@ class Advising extends Component {
                                                             advisingDate: advisingDate
                                                         }
                                                         Meteor.call('changeDates', data, (err) => {
-                                                            if(err) {
-                                                                alertError(err.reason);
-                                                            } else {
-                                                                alertSuccess('Profile Updated!');
-                                                            }
+                                                            
                                                         })
                                                     })
                                                 }
@@ -216,11 +212,7 @@ class Advising extends Component {
                                                             advisingDate: advisingDate
                                                         }
                                                         Meteor.call('changeDates', data, (err) => {
-                                                            if(err) {
-                                                                alertError(err.reason);
-                                                            } else {
-                                                                alertSuccess('Profile Updated!');
-                                                            }
+                                                            
                                                         })
                                                     })
                                                 }
@@ -261,11 +253,7 @@ class Advising extends Component {
                                                             advisingDate: advisingDate
                                                         }
                                                         Meteor.call('changeDates', data, (err) => {
-                                                            if(err) {
-                                                                alertError(err.reason);
-                                                            } else {
-                                                                alertSuccess('Profile Updated!');
-                                                            }
+                                                            
                                                         })
                                                     })
                                                 }
@@ -306,11 +294,7 @@ class Advising extends Component {
                                                             advisingDate: date
                                                         }
                                                         Meteor.call('changeDates', data, (err) => {
-                                                            if(err) {
-                                                                alertError(err.reason);
-                                                            } else {
-                                                                alertSuccess('Profile Updated!');
-                                                            }
+                                                            
                                                         })
                                                     })
                                                 }
@@ -351,11 +335,8 @@ class Advising extends Component {
                                                             advisingDate: advisingDate
                                                         }
                                                         Meteor.call('changeDates', data, (err) => {
-                                                            if(err) {
-                                                                alertError(err.reason);
-                                                            } else {
-                                                                alertSuccess('Profile Updated!');
-                                                            }
+                                                            
+                                            
                                                         })
                                                     })
                                                 }
@@ -396,11 +377,7 @@ class Advising extends Component {
                                                             advisingDate: advisingDate
                                                         }
                                                         Meteor.call('changeDates', data, (err) => {
-                                                            if(err) {
-                                                                alertError(err.reason);
-                                                            } else {
-                                                                alertSuccess('Profile Updated!');
-                                                            }
+
                                                         })
                                                     })
                                                 }
