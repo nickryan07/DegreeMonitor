@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, Image, Platform } from 'react-native';
+import { StyleSheet } from 'react-native';
 import variables from "../native-base-theme/variables/commonColor";
 
 

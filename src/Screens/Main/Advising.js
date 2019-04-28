@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, StatusBar, Image, TextInput, Platform } from 'react-native';
-import Meteor, { Accounts, withTracker } from 'react-native-meteor';
-import Dialog from 'react-native-dialog';
+import { StyleSheet, Platform } from 'react-native';
+import Meteor, { withTracker } from 'react-native-meteor';
 import { WaveIndicator } from 'react-native-indicators';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, Item, Input, Picker, View, Content, Title, List, Form, Button, DatePicker, SwipeRow, ListItem, Text, Icon, Left, Right, Grid, Row, Col } from 'native-base';
+import { Container, Item, Input, Picker, Content, Form, DatePicker, Text, Icon, Grid, Row, Col } from 'native-base';
 import { commonStyles } from '../../Styles';
 import Header from '../../Components/Header';
 import { alertError, alertSuccess } from '../../Alerts';

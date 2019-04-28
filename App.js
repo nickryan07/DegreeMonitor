@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
 import { Root, StyleProvider } from 'native-base';
 import { AppLoading } from 'expo';
 import Meteor, { withTracker } from 'react-native-meteor';

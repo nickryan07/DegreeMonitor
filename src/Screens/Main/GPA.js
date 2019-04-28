@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, StatusBar, Image, TextInput, Platform } from 'react-native';
-import Meteor, { Accounts, withTracker } from 'react-native-meteor';
+import { StyleSheet } from 'react-native';
+import Meteor, { withTracker } from 'react-native-meteor';
 import Dialog from 'react-native-dialog';
 import { WaveIndicator } from 'react-native-indicators';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, Accordion, View, Content, Title, List, Button, SwipeRow, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
-import { commonStyles } from '../../Styles';
+import { Container, View, Content, List, Button, SwipeRow, ListItem, Text, Icon, Left, Right } from 'native-base';
 import Header from '../../Components/Header';
 
 
@@ -44,7 +43,7 @@ class GPA extends Component {
         const { newSemester, newYear, showingAddSemester} = this.state;
 
         Meteor.call('addSemester', newSemester, newYear, (err) => {
-            //console.log(err);
+            
         });
         this.setState({
             showingAddSemester: !showingAddSemester,
@@ -58,7 +57,7 @@ class GPA extends Component {
             return;
         }
         Meteor.call('addCourse', newCourse, newCourseGrade, selectedSemester, (err) => {
-            //console.log(err);
+
         });
         this.setState({
             showingAddCourse: !showingAddCourse,
@@ -70,7 +69,7 @@ class GPA extends Component {
 
     removeCourse = courseId => {
         Meteor.call('removeCourse', courseId, (err) => {
-            //console.log(err);
+
         });
     }
 
@@ -114,7 +113,6 @@ class GPA extends Component {
 
     renderCourses = (semesterId) => {
         let courses = this.props.currentUser.profile.courses.filter(course => {
-            //console.log(course.semesterId, semesterId, course.semesterId._str === semesterId._str)
             return course.semesterId._str === semesterId._str;
         });
         if(courses.length === 0) {
@@ -122,10 +120,6 @@ class GPA extends Component {
         }
         return (
             courses.map((course, i) => (
-
-                // <ListItem key={i}>
-                //     <Text>{course[1]}</Text>
-                // </ListItem>
                 <SwipeRow
                 style={{backgroundColor: variables.containerBgColor}}
                 key={i}

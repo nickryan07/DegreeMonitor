@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, StatusBar, Image, TextInput, Platform } from 'react-native';
-import Meteor, { Accounts, withTracker } from 'react-native-meteor';
+import { StyleSheet, Platform } from 'react-native';
+import Meteor, { withTracker } from 'react-native-meteor';
 
 import variables from "../../../native-base-theme/variables/commonColor";
-import { Container, Input, Grid, Row, Col, Form, Label, Picker, Content, Title, List, Button, Item, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
+import { Container, Input, Grid, Row, Col, Form, Picker, Content,  Button, Item, Text, Icon } from 'native-base';
 import { commonStyles } from '../../Styles';
 import Header from '../../Components/Header';
 import { alertError, alertSuccess } from '../../Alerts';
@@ -163,7 +163,6 @@ class Settings extends Component {
                 }
                 <Button rounded onPress={() => {
                     this.handleSignOut()
-                    console.log(this.props.currentUser.profile)
                 }} style={styles.logoutButton}>
                     <Text>
                         Log Out
@@ -174,7 +173,6 @@ class Settings extends Component {
     }
 
     render() {
-        const { fName, lName, hoursTaken, currentGPA, major } = this.state;
         return (
             <Container style={commonStyles.container}>
                 {this.props.currentUser ? <Header headerTitle="Settings" iconName="ios-save" iconAction={() => {this.handleSaveProfile()}} />
