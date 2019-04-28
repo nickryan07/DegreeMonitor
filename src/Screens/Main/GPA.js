@@ -164,7 +164,10 @@ class GPA extends Component {
     }
 
     getCreditHours = (course) => {
-        let courseCode = course.split(' ')[1];
+        if(course.length < 4) {
+            return 0
+        }
+        let courseCode = course.substr(course.length - 4);;
         return Number(courseCode.charAt(1));
     }
 

@@ -169,7 +169,7 @@ class Homepage extends Component {
             <Container>
                 <Header headerTitle="Home" iconName="ios-home" iconAction={() => {}}/>
                 
-                {!this.state.waiting ? this.renderHomeContent() : <WaveIndicator style={{margin: 12}} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/>}
+                {this.props.currentUser && !this.state.waiting ? this.renderHomeContent() : <WaveIndicator style={{margin: 12}} color={variables.brandPrimary} waveMode='outline' count={3} waveFactor={0.6}/>}
             </Container>
         )
     }
